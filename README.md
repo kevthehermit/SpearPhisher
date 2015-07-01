@@ -109,9 +109,9 @@ then point a browser at your IP on port 8080
 After logging in access the admin panel from the Nav Bar.
 Under SMTP Servers add a new smtp server. 
 
-If your using the local smtp server you can leave the username, password and tls values blank
+If your using the local smtp server you can leave the username, password and tls values blank. For those in the UK. Most ISP's will block port 25 so running a local smtp server will likley fail to send any mails. 
 
-If your using Gmail or some other SMTP relay fill in all the required values.
+If your using Gmail or some other SMTP relay instaed of a local one fill in all the required values.
 
 You can test the functionality of the SMTP by using the Create --> Single Email from the Nav Bar
 
