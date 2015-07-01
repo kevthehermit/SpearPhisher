@@ -10,7 +10,8 @@ For best performance the Web server should **NOT** be run on the default single 
 
 # Installation
 
-This installation has been tested with a clean install of Ubuntu Server 14.04 using Python 2.7
+This installation has been tested with a clean install of Ubuntu Server 14.04 using Python 2.7.
+
 During installation the following optional elements were selected for installation 
 
 * OpenSSH server
@@ -45,7 +46,10 @@ git clone https://github.com/kevthehermit/SpearPhisher
 cd SpearPhisher
 sudo cp -r install/var/www/html/* /var/www/html/
 sudo cp install/vhost/portal.conf /etc/apache2/sites-available/
+sudo chown -R spearphisher:spearphisher /var/www/html/
+chmod -R 775 /var/www/html/
 ```
+replace the username in the chown commdand to match your ubuntu username
 
 ###### Apache
 
@@ -82,9 +86,10 @@ Edit spearphisher/settings.py
 - Set the DATABASES Settings to match your setup
 - Set Your TIME_ZONE
 
+```
 python manage.py makemigrations
 python manage.py migrate
-
+```
 ###### Super User
 
 ```python manage.py createsuperuser```
