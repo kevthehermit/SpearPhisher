@@ -19,10 +19,10 @@ During installation the following optional elements were selected for installati
 * Mail server - Postfix set to Internet Site
 
 ```
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install python-dev python-pip git libmysqlclient-dev libapache2-mod-wsgi
-sudo pip install --upgrade bottle django mysql-python ua-parser
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get install python-dev python-pip git libmysqlclient-dev libapache2-mod-wsgi
+$ sudo pip install --upgrade bottle django mysql-python ua-parser
 ```
 
 
@@ -41,13 +41,13 @@ The following additions are optional but can be used to enhance the functionalit
 ###### File Paths
 
 ```
-cd path/to/spearphisher
-git clone https://github.com/kevthehermit/SpearPhisher
-cd SpearPhisher
-sudo cp -r install/var/www/html/* /var/www/html/
-sudo cp install/vhost/portal.conf /etc/apache2/sites-available/
-sudo chown -R spearphisher:spearphisher /var/www/html/
-chmod -R 775 /var/www/html/
+$ cd path/to/spearphisher
+$ git clone https://github.com/kevthehermit/SpearPhisher
+$ cd SpearPhisher
+$ sudo cp -r install/var/www/html/* /var/www/html/
+$ sudo cp install/vhost/portal.conf /etc/apache2/sites-available/
+$ sudo chown -R spearphisher:spearphisher /var/www/html/
+$ chmod -R 775 /var/www/html/
 ```
 replace the username in the chown commdand to match your ubuntu username
 
@@ -56,9 +56,9 @@ replace the username in the chown commdand to match your ubuntu username
 Disable the default site and enable our portal
 
 ```
-sudo a2dissite 000-default.conf
-sudo a2ensite portal.conf
-sudo service apache2 restart
+$ sudo a2dissite 000-default.conf
+$ sudo a2ensite portal.conf
+$ sudo service apache2 restart
 ```
 
 
@@ -66,7 +66,7 @@ sudo service apache2 restart
 
 It is advised to secure your new MySQL install with
 
-```sudo mysql_secure_installation```
+```$ sudo mysql_secure_installation```
 
 Create a user and a database
 
@@ -87,12 +87,12 @@ Edit spearphisher/settings.py
 - Set Your TIME_ZONE
 
 ```
-python manage.py makemigrations
-python manage.py migrate
+$ python manage.py makemigrations
+$ python manage.py migrate
 ```
 ###### Super User
 
-```python manage.py createsuperuser```
+```$ python manage.py createsuperuser```
 
 Follow the on screen instructions. The username must be in the form of an email address.
 
@@ -100,7 +100,7 @@ Follow the on screen instructions. The username must be in the form of an email 
 
 With all the steps in place you should be able to run the Django web server and access the control panel. 
 
-python manage.py runserver 0.0.0.0:8080
+```$ python manage.py runserver 0.0.0.0:8080```
 
 then point a browser at your IP on port 8080
 
@@ -114,6 +114,13 @@ If your using the local smtp server you can leave the username, password and tls
 If your using Gmail or some other SMTP relay instaed of a local one fill in all the required values.
 
 You can test the functionality of the SMTP by using the Create --> Single Email from the Nav Bar
+
+###### Portal Configuration
+
+For your portal to work correctly it needs an IP or a Domain assigned to it. These details will need to be configured in the Django application.
+
+Access the admin panel from the Nav Bar. 
+Under Configuration create a new object and fill in the details as required. 
 
 ##Usage
 
