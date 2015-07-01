@@ -15,25 +15,15 @@ During installation the following optional elements were selected for installati
 
 * OpenSSH server
 * LAMP Server
-* Mail server - Postfix Internet Site
+* Mail server - Postfix set to Internet Site
 
 ```
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install python-dev python-pip git libmysqlclient-dev
+sudo apt-get install python-dev python-pip git libmysqlclient-dev libapache2-mod-wsgi
+sudo pip install --upgrade bottle django mysql-python ua-parser
 ```
 
-## Prerequisites
-
-###### Mandatory
-
-* Django - 1.8.2
-* Python MySQl - 1.2.5
-* Bottle - 0.12.8
-
-These can all be installed via pip:
-
-```sudo pip install --upgrade bottle django mysql-python```
 
 ###### Optional
 
@@ -53,9 +43,20 @@ The following additions are optional but can be used to enhance the functionalit
 cd path/to/spearphisher
 git clone https://github.com/kevthehermit/SpearPhisher
 cd SpearPhisher
-sudo cp var/www/html/* /var/www/html/
-sudo cp vhost/panel.conf /etc/apache2/sites-availiable/
+sudo cp -r install/var/www/html/* /var/www/html/
+sudo cp install/vhost/portal.conf /etc/apache2/sites-available/
 ```
+
+###### Apache
+
+Disable the default site and enable our portal
+
+```
+sudo a2dissite 000-default.conf
+sudo a2ensite portal.conf
+sudo service apache2 restart
+```
+
 
 ###### MySql
 
