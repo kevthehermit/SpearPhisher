@@ -62,10 +62,9 @@ $ git clone https://github.com/kevthehermit/SpearPhisher
 $ cd SpearPhisher
 $ sudo cp -r install/var/www/html/* /var/www/html/
 $ sudo cp install/vhost/portal.conf /etc/apache2/sites-available/
-$ sudo chown -R spearphisher:spearphisher /var/www/html/
+$ sudo chown -R www-data:www-data /var/www/html/
 $ chmod -R 775 /var/www/html/
 ```
-replace the username in the chown commdand to match your ubuntu username
 
 ###### Apache
 
