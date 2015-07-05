@@ -24,6 +24,7 @@ ToDo:
 * Pre Defined Templates.
 * Safely handle JavaScript in Templates to block them in template view mode. 
 * Complete the Form Handler.
+* Account Management / Password Reset
 
 For best performance the Web server should **NOT** be run on the default single threaded SQlite DB and web server. In this installation example I will use Apache with MOD WSGI and MySQL.  
 
