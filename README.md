@@ -2,11 +2,27 @@
 A Web Application to Send and Track Spear Phishing Campaigns
 
 SpearPhisher is made up of 3 components. 
-* Django Web Application for Creation and Management
-* SMTP Server for sending Emails
-* Bottle Web Application for Tracking Responses
+* Django Web Application for Creation and Management.
+* SMTP Server for sending Emails.
+* Bottle Web Application for Tracking Responses.
 
-For best performance the Web server should **NOT** be run on the default single threaded SQlite DB and web server. In this installation we will use Apache with MOD WSGI and MySQL.  
+SpearPhisher makes use of the following 3rd-Party components:
+
+* jQuery - https://code.jquery.com/
+* BootStrap - http://getbootstrap.com/
+* BootStrap Tables - http://bootstrap-table.wenzhixin.net.cn/
+* SummerNote - http://summernote.org/
+* FontAwsome - https://fortawesome.github.io/Font-Awesome/
+* HighCharts - http://www.highcharts.com/
+
+ToDo:
+
+* Report Summary
+* Edit Campaign
+* Pre Defined Templates.
+
+For best performance the Web server should **NOT** be run on the default single threaded SQlite DB and web server. In this installation example I will use Apache with MOD WSGI and MySQL.  
+
 
 # Installation
 
@@ -115,16 +131,31 @@ If your using Gmail or some other SMTP relay instaed of a local one fill in all 
 
 You can test the functionality of the SMTP by using the Create --> Single Email from the Nav Bar
 
-###### Portal Configuration
-
-For your portal to work correctly it needs an IP or a Domain assigned to it. These details will need to be configured in the Django application.
-
-Access the admin panel from the Nav Bar. 
-Under Configuration create a new object and fill in the details as required. 
 
 ##Usage
 
-###### Create your first campaign.
+###### Create your first template
+
+
+
+###### Create Your First Campaign
+
+From the nav bar select Create --> Campaign. Enter all the details and select the template you created in the previous section.
+
+Once you have created your campaign you need to add recipients. Open your campaing and select the tracking tab. On the tab bar you shoudl see and option to 'Add Reciepients'. 
+
+You can add individualy via the web interface or upload a csv of Name,Email
+
+Once you have added all your recipients you are ready to go. 
+
+
+###### Running the Campaing. 
+
+When you click the start button all the emails will start to send. From this point you are no longer able to add new recipients. All responses will be tracked and stored in the database until you click the stop button. 
+
+Once the campaign has been stopped the portal will redirect all users to google without tracking their activites in to the DataBase. 
+
+
 
 
 
