@@ -178,8 +178,8 @@ The portal URI is the domain / ip that the portal is hosted on. e.g. spearphishe
 The Redirect to is used to redirect to any other domain. 
 If plugin detection has been enabled there is a 3 second delay in order to complete the plugin detection. If you are redirecting from plugin detection it may be worth adding a 'Please Wait or eqivilent line as the portal page will be visible.'
 
-In the portal design elements you can create an HTML form to cpature Post Data. Just set the target of the form to [[form]].
-All key value pairs will be recorded in the DataBase. 
+In the portal design elements you can create an HTML form to cpature Post Data. Just set the form action to ```action="/f/"```.
+All key value pairs from your form will be recorded in the DataBase. 
 
 
 #### Create Your First Campaign
