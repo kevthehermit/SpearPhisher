@@ -1,0 +1,269 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>SpearPhisher - {% block title %}SpearPhisher{% endblock %}</title>
+<meta charset="UTF-8">
+<meta name="description" content="SpearPhisher">
+<meta name="keywords" content="email,spear,phishing">
+
+<!-- CSS Pages -->
+<link href="{% static '3rd-party/bootstrap-table/bootstrap-table.min.css' %}" rel="stylesheet">
+<link href="{% static '3rd-party/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static '3rd-party/summernote/font-awesome.min.css' %}" rel="stylesheet">
+<link href="{% static '3rd-party/summernote/summernote.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+
+<!-- JQuery Lib -->
+<script type="text/javascript" src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+
+<!-- BootStrap JS -->
+<script type="text/javascript" src="{% static '3rd-party/bootstrap/js/bootstrap.js' %}"></script>
+
+<!-- Bootstrap Tables -->
+
+<script type="text/javascript" src="{% static '3rd-party/bootstrap-table/bootstrap-table.min.js' %}"></script>
+
+<!-- Summer Note -->
+
+<script src="{% static '3rd-party/summernote/summernote.min.js' %}"></script>
+
+<!-- file-style -->
+
+<script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
+
+<!--
+These JavaScripts set the graph content using HighCharts
+-->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+    
+
+
+
+
+</head>
+ 
+<body>
+
+<!-- Nav Bar -->
+
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">SpearPhisher</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Create <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/single" >Single email</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#campaignModal">Quick Campaign</a></li>
+          </ul>
+        </li>
+        <li ><a href="/template">Templates</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.username}}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </li>
+        {% else %}
+            <li><a href="#" data-toggle="modal" data-target="#loginForm">Login</a></li>
+        {% endif %}
+
+        
+        
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/admin">Admin Portal</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="#">Add SMTP Server</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Docs</a></li>
+            <li><a href="#">Issues</a></li>
+            <li><a href="#">ChangeLog</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- End Nav -->
+
+<div class="container-fluid">
+
+<!-- End Header  -->
+
+{% if user.is_authenticated %}
+{% block content %}{% endblock %}
+{% else %}
+
+<div class="container text-center">
+<h2>Welcome to SpearPhisher</h2>
+<p>This is the interactive web panel that will allow you to track campaigns and individual statistics.<p>
+<p>In order to access the Web Panel you must first <a href="#" data-toggle="modal" data-target="#loginForm">Login</a></p>
+<hr>
+<p>If you do not have an account and require access please contact your administrator on xxxx</p>
+</div>
+
+
+{% endif %}
+
+
+</div> 
+
+<!-- container -->
+ 
+    
+ <div class="footer">
+      <div class="container">
+      <div align="center">
+<p class="muted credit"><a href="http://spearphisher.co.uk">SpearPhisher</a> Copyright &copy; 2014-2015. Created by <a href="http://techanarchy.net/">Kevin Breen</a>.</p>
+</div>
+      </div>
+    </div>
+
+<script>
+$(function () {
+var activeTab = $('[href=' + location.hash + ']');
+activeTab && activeTab.tab('show');
+});
+</script>  
+
+<!-- Modals -->
+
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="aboutLabel">About</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-warning">
+                  <div class="panel-heading">3rd Party Apps</div>
+                  <div class="panel-body">
+                    <p>The following 3rd party products are included in SpearPhisher.</p>
+                    <div class="list-group">
+                        <a href="https://code.jquery.com/" class="list-group-item">jQuery</a>
+                        <a href="http://getbootstrap.com/" class="list-group-item">BootStrap</a>
+                        <a href="http://bootstrap-table.wenzhixin.net.cn/" class="list-group-item">Bootstrap Tables</a>
+                        <a href="http://summernote.org/" class="list-group-item">SummerNote</a>
+                        <a href="https://fortawesome.github.io/Font-Awesome/" class="list-group-item">FontAwsome</a>
+                        <a href="http://www.highcharts.com/" class="list-group-item">HighCharts</a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>      
+
+<div class="modal fade" id="loginForm" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="loginLabel">Login</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-signin" role="form" action="/login/" enctype="multipart/form-data" method="post" target="_self">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="email" name="username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>      
+
+<div class="modal fade" id="campaignModal" tabindex="-1" role="dialog" aria-labelledby="newCamLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="newCamLabel">Create New Campaign</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="/add/campaign/" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="c_name" placeholder="Name">
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" name="c_desc" placeholder="Description"></textarea>
+                    </div>
+                    
+                      <div class="form-group">
+                          <label for="c_template">Template</label>
+                          <select class="form-control" name="c_template" id="c_template">
+                            {% if user.is_authenticated %}
+                            {% for template in template_list %}
+                            <option value="{{template.id}}">{{template.title}}</option>
+                            {% endfor %}
+                            <option value="1">Template</option>
+                            {% endif %}
+                            
+                        </select>
+                      </div>                                  
+                    
+                    <button type="submit" class="btn btn-default" name="new" value="New">Submit</button>
+                    
+                    <input type="hidden" name="type" value="campaign" />
+                    <input type="hidden" name="action" value="new" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> 
+
+</body>
+</html>

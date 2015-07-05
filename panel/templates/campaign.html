@@ -1,0 +1,323 @@
+{% extends "base.html" %}
+
+{% block title %}Campaign ID: {% endblock %}
+
+
+{% block templates %}
+    {% for template in template_list %}
+    <option value="{{template.id}}">{{template.title}}</option>
+    {% endfor %}
+
+{% endblock %}
+
+{% block content %}
+
+<script>
+function renderBarChart(chart_name, chart_title, chart_div) {
+
+     var pluginVerChart = {
+        chart: {
+            renderTo: chart_div,
+            type: 'bar',
+            width: 500,
+            height: 250,
+        },
+        credits: {
+            enabled: false
+        },
+        legend: {enabled: false},
+        title: {text: chart_title},
+        xAxis: {title: {text: null}, labels: {rotation: 0}},
+        yAxis: {title: {text: null}},
+        series: [{}],
+    };
+
+    var chartDataUrl = "/stats/{{ campaign_details.id }}/?chart_name="+chart_name;
+    $.getJSON(chartDataUrl,
+        function(data) {
+            pluginVerChart.xAxis.categories = data['versions'];
+            pluginVerChart.series[0].name = 'Version Count';
+            pluginVerChart.series[0].data = data['values'];
+            var chart = new Highcharts.Chart(pluginVerChart);
+    });
+
+} ;
+
+{% if template_details.portal_plugins == 1 %}
+renderBarChart('pdf_dict', 'Adobe Reader', 'pdf_chart')
+renderBarChart('flash_dict', 'Flash Player', 'flash_chart')
+renderBarChart('shock_dict', 'ShockWave', 'shock_chart')
+renderBarChart('silver_dict', 'Silverlight', 'silver_chart')
+renderBarChart('java_dict', 'Java', 'java_chart')
+{% endif %}
+
+renderBarChart('os_sys', 'Operating System', 'os_chart')
+renderBarChart('browsers', 'Web Browser', 'browser_chart')
+
+</script>
+
+
+
+
+
+
+
+
+        <ul id="navTabs" class="nav nav-tabs">
+            <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+            <li><a href="#tracking" data-toggle="tab">Tracking</a></li>
+            <li><a href="#statistics" data-toggle="tab">Statistics</a></li>
+        </ul>
+        
+        <div class="tab-content">       
+            <!-- Details -->
+            <div class="tab-pane active" id="details">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover">
+                            <tr>
+                                <th>Campaign Name</th>
+                                <td>{{ campaign_details.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Campaign Description</th>
+                                <td>{{ campaign_details.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Created</th>
+                                <td>{{ campaign_details.created }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Status</th>
+                                <td>{{ campaign_details.state }}</td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                <th>Started</th>
+                                <td>
+                                {% if campaign_details.start_date == None %} 
+                                <a href="/control?action=start&amp;cid={{ campaign_details.id }}" class="btn btn-success btn-xs" role="button">Start</a></td>
+                                {% else %}
+                                {{ campaign_details.start_date }}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            
+                            
+                            <tr>
+                                <th>Ended</th>
+                                <td>
+                                {% if campaign_details.end_date == None %} 
+                                <a href="/control?action=stop&amp;cid={{ campaign_details.id }}" class="btn btn-danger btn-xs" role="button">Stop</a></td>
+                                {% else %}
+                                {{ campaign_details.end_date }}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            
+                            <tr>
+                                <th>Sender</th>
+                                <td>{{ template_details.display_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Subject</th>
+                                <td>{{ template_details.subject_line }}</td>
+                            </tr>                
+                            <tr>
+                                <th>Template</th>
+                                <td>{{ template_details.title }}
+                                <a href="/template/{{ template_details.id }}" class="btn btn-primary btn-xs" role="button">Preview</a></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Template Description</th>
+                                <td>{{ template_details.description }}</td>
+                            </tr>                
+                            <tr>
+                                <th>Portal</th>
+                                <td>{{ template_details.portal_uri }}</td>
+                            </tr>                
+                    </table>
+            </div>
+
+
+            </div>
+            </div>
+            <!-- END Details -->
+            
+            
+            <!-- Tracking -->
+            <div class="tab-pane" id="tracking">
+
+                        <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <h3 class="panel-title">Tracking: <span class="text-success"><strong>{{ recipient_list|length }}</strong></span> Recipients  
+                        {% if campaign_details.state == 'Pending' %} 
+                        <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#recipientModal">Add Recipient</button>
+                        </h3>
+                        
+
+
+                        
+                        
+                        {% else %}
+                        </h3>
+                        <span class="pull-right export-heading clickable"> <a class="text-success" href="/export/basic/{{campaign_details.id}}"><span class="glyphicon glyphicon-save"> Export</span></a> </span>
+                        {% endif %}
+
+                        </div>
+
+                    <table class="table table-striped table-bordered table-hover" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th data-sortable="true">Name</th>
+                                <th data-sortable="true">Email</th>
+                                <th data-sortable="true">UID</th>
+                                <th data-sortable="true">Web Bug</th>
+                                <th data-sortable="true"> Click Through</th>
+                                <th data-sortable="true">Document</th>
+                                <th data-sortable="true">OS Version</th>
+                                <th><span class="glyphicon glyphicon-trash"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for recipient in recipient_list %}
+                            <tr>
+                                <td>{{ recipient.id }}</td>
+                                <td><a href="/recipient/{{ recipient.id }}/">{{ recipient.real_name }}</a></td>
+                                <td>{{ recipient.email_address }}</td>
+                                <td>{{ recipient.uid }}</td>
+                                <td>{{ recipient.email_open }}</td>
+                                <td>{{ recipient.portal_open }}</td>
+                                <td>{{ recipient.document_open }}</td>
+                                <td>{{recipient.os_system}}</td>
+                                <td><a class="text-danger" href="/control?action=delete&amp;type=uid&amp;uid={{ recipient.uid }}&amp;cid={{ campaign_details.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>                        
+                   </table>
+
+            </div>        
+                    
+    
+
+            </div>
+            <!-- End Tracking -->
+            
+            <!-- Stats -->
+            <div class="tab-pane" id="statistics">
+                        <div class="panel panel-default">
+                            <div class="container-fluid">
+
+                                    <div class="row text-center">
+                                        <h3>{{counters.click}} Recipients Clicked the link. <small>Thats {% widthratio counters.click counters.total 100 %}%</small></h3>
+                                        {% if template_details.document_enable == 1 %}
+                                        <h3>{{counters.document}} Recipients Opened the Document. <small>Thats {% widthratio counters.document counters.total 100 %}%</small></h3>
+                                        {% endif %}
+                                    </div>
+
+                                
+                                <div class="panel panel-default">
+                                  <div class="panel-heading">Browser and Operating Systems</div>
+                                  <div class="panel-body">
+                                    <div class="row row-centered">
+                                        <div class="col-md-6 col-centered">
+                                            <div id="os_chart"></div>
+                                        </div>
+                                        <div class="col-md-6 col-centered">
+                                            <div id="browser_chart"></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                
+                                {% if template_details.portal_plugins == 1 %}
+                                <div class="panel panel-default">
+                                  <div class="panel-heading">Plugin Version Numbers</div>
+                                  <div class="panel-body">
+                                  
+                                    <div class="row center-block">
+                                        <div class="col-md-4">
+                                            <div id="pdf_chart"></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="flash_chart"></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="shock_chart"></div>
+                                        </div>
+
+                                    
+
+                                        <div class="col-md-4">
+                                            <div id="silver_chart"></div>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="java_chart"></div>
+                                        </div>
+                                    </div>
+                                    
+                                  </div>
+                                </div>
+                                {% endif %}
+                                
+                                
+                                
+
+                                
+                                
+                            </div>
+                        </div>
+
+            </div>
+            <!-- End Stats -->                
+        </div>
+
+
+
+            <div class="modal fade" id="recipientModal" tabindex="-1" role="dialog" aria-labelledby="recipient" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="recipient">Add New Sender</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" action="/add/recipient/" enctype="multipart/form-data" method="post">
+                            
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="real_name" placeholder="Display Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">@</div>
+                                        <input class="form-control" type="email" name="email_add" placeholder="Enter email">
+                                    </div>
+                                </div>
+                                <h4> Or </h4>
+                                <div class="form-group">
+                                    <input type="file" class="filestyle" data-buttonBefore="true" name="css_import">
+                                </div>
+                                
+                                <button type="submit" class="btn btn-default" name="new" value="New">Submit</button>
+                                {% csrf_token %}
+                                <input type="hidden" name="type" value="recipient" />
+                                <input type="hidden" name="action" value="new" />
+                                <input type="hidden" name="c_id" value="{{ campaign_details.id }}" />
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+{% endblock %}

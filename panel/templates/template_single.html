@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Template{% endblock %}
+
+{% block content %}
+
+        <ul id="navTabs" class="nav nav-tabs">
+            <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+            <li><a href="#email" data-toggle="tab">Email</a></li>
+            <li><a href="#document" data-toggle="tab">Document</a></li>
+        </ul>
+        <form role="form" action="/send/single/" enctype="multipart/form-data" method="post">
+            <div class="tab-content">       
+                <!-- Details -->
+                <div class="tab-pane active" id="details">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Recipient Details</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="recipient_name" placeholder="Display Name" required>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">@</div>
+                                                <input class="form-control" type="email" name="recipient_email" placeholder="Enter email" required>
+                                            </div>
+                                        </div>
+                                        {% csrf_token %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Details -->
+
+                <!-- Email -->
+                <div class="tab-pane" id="email">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                        
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Sender Details</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="display_name" placeholder="Display Name" required>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">@</div>
+                                                <input class="form-control" type="email" name="email_address" placeholder="Enter email" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" name="subject_line" placeholder="Subject Line" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="smtp_id">SMTP Server</label>
+                                            <select class="form-control" name="smtp_id" id="smtp_id">
+                                                {% for server in smtpserver_list %}
+                                                <option value="{{server.id}}">{{server.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div> 
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Email Design</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <textarea id="emailedit" class="form-control" rows="3" name="email_design">{{template_details.email_design}}</textarea>
+                                    <script>
+                                    $(document).ready(function() {
+                                      $('#emailedit').summernote({
+                                        height: 500,
+                                        codemirror: {
+                                          mode: 'text/html',
+                                          htmlMode: true,
+                                          lineNumbers: true,
+                                          theme: 'monokai'
+                                        }
+                                      });
+                                    });
+                                    </script>             
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Email -->
+
+
+
+    
+                <!-- Document -->
+                <div class="tab-pane" id="document">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Document Template</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group form-inline">
+                                        <div class="form-group">
+                                            <label for="document_name">Document Title: </label>
+                                            <input type="text" class="form-control" name="document_name" id="document_name" value="{{template_details.document_name|default:'document.doc'}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="document_enable">Include Document: </label>
+                                            {% if template_details.document_enable == 1 %}
+                                            <input type="checkbox" name="document_enable" checked="Checked">
+                                            {% else %} 
+                                            <input type="checkbox" name="document_enable">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <textarea id="docedit" class="form-control" rows="3" name="document_design">{{template_details.document_design}}</textarea>
+
+
+                                    <script>
+                                    $(document).ready(function() {
+                                      $('#docedit').summernote({
+                                        height: 500,
+                                        codemirror: {
+                                          mode: 'text/html',
+                                          htmlMode: true,
+                                          lineNumbers: true,
+                                          theme: 'monokai'
+                                        }
+                                      });
+                                    });
+                                    </script>             
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button type="submit" name="action" value="new" class="btn btn-success">Send</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- END Document -->                
+
+
+ 
+            </div>
+        </form>
+
+
+{% endblock %}

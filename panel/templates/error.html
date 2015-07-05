@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Campaigns{% endblock %}
+
+
+{% block templates %}
+    {% for template in template_list %}
+    <option value="{{template.id}}">{{template.title}}</option>
+    {% endfor %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+<h2>The Page Generated An Error</h2>
+<div class="alert alert-danger">
+
+    <p>Please Click back and try again. If the error persists please contact support.</p>
+    <p>The error has been logged and reads: "{{error}}"</p>
+</div>
+
+</div>
+
+
+{% endblock %}

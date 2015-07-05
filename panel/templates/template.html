@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block title %}Template{% endblock %}
+
+{% block content %}
+
+        <ul id="navTabs" class="nav nav-tabs">
+            <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+            <li><a href="#email" data-toggle="tab">Email</a></li>
+            <li><a href="#document" data-toggle="tab">Document</a></li>
+            <li><a href="#portal" data-toggle="tab">Portal</a></li>
+        </ul>
+        <form role="form" action="/add/template/" enctype="multipart/form-data" method="post">
+            <div class="tab-content">       
+                <!-- Details -->
+                <div class="tab-pane active" id="details">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="title" value="{{template_details.title|default:"No Template Title"}}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea class="form-control" rows="3" name="description" >{{template_details.description|default:"No Description Provided"}}</textarea>
+                            </div>
+                            <input type="hidden" name="id" value="{{template_details.id|default:""}}" />
+                            {% csrf_token %}
+                        </div>
+                    </div>
+                </div>
+                <!-- END Details -->
+
+                <!-- Email -->
+                <div class="tab-pane" id="email">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                        
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Sender Details</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="display_name" placeholder="Display Name" value="{{template_details.display_name}}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">@</div>
+                                                <input class="form-control" type="email" name="email_address" placeholder="Enter email" value="{{template_details.email_address}}" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" name="subject_line" placeholder="Subject Line" value="{{template_details.subject_line}}" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="smtp_id">SMTP Server</label>
+                                            <select class="form-control" name="smtp_id" id="smtp_id">
+                                                {% for server in smtpserver_list %}
+                                                <option value="{{server.id}}">{{server.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div> 
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Email Design</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <textarea id="emailedit" class="form-control" rows="3" name="email_design">{{template_details.email_design}}</textarea>
+                                    <script>
+                                    $(document).ready(function() {
+                                      $('#emailedit').summernote({
+                                        height: 500,
+                                        codemirror: {
+                                          mode: 'text/html',
+                                          htmlMode: true,
+                                          lineNumbers: true,
+                                          theme: 'monokai'
+                                        }
+                                      });
+                                    });
+                                    </script>             
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Email -->
+
+
+
+    
+                <!-- Document -->
+                <div class="tab-pane" id="document">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Document Template</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group form-inline">
+                                        <div class="form-group">
+                                            <label for="document_name">Document Title: </label>
+                                            <input type="text" class="form-control" name="document_name" id="document_name" value="{{template_details.document_name|default:'document.doc'}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="document_enable">Include Document: </label>
+                                            {% if template_details.document_enable == 1 %}
+                                            <input type="checkbox" name="document_enable" checked="Checked">
+                                            {% else %} 
+                                            <input type="checkbox" name="document_enable">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <textarea id="docedit" class="form-control" rows="3" name="document_design">{{template_details.document_design}}</textarea>
+
+
+                                    <script>
+                                    $(document).ready(function() {
+                                      $('#docedit').summernote({
+                                        height: 500,
+                                        codemirror: {
+                                          mode: 'text/html',
+                                          htmlMode: true,
+                                          lineNumbers: true,
+                                          theme: 'monokai'
+                                        }
+                                      });
+                                    });
+                                    </script>             
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Document -->                
+                    <!-- Portal -->
+                    <div class="tab-pane" id="portal">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Portal Design</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group form-inline">
+                                        <div class="form-group">
+                                            <label for="portal_uri">Portal URI: </label>
+                                            <input type="text" class="form-control" name="portal_uri" id="portal_uri" value="{{template_details.portal_uri}}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="portal_redirect">Redirect To: </label>
+                                            <input type="text" class="form-control" name="portal_redirect" id="portal_redirect" value="{{template_details.portal_redirect}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="portal_plugin">Enable PluginDetect: </label>
+                                            {% if template_details.portal_plugins == 1 %}
+                                            <input type="checkbox" name="portal_plugin" checked="Checked">
+                                            {% else %} 
+                                            <input type="checkbox" name="portal_plugin">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <textarea id="portaledit" class="form-control" rows="3" name="portal_design">{{template_details.portal_design}}</textarea>
+
+
+                                    <script>
+                                        $(document).ready(function() {
+                                        $('#portaledit').summernote({
+                                        height: 500,
+                                        codemirror: {
+                                        mode: 'text/html',
+                                        htmlMode: true,
+                                        lineNumbers: true,
+                                        theme: 'monokai'
+                                        }
+                                        });
+                                        });
+                                    </script>             
+                                </div>
+                                <div class="pull-right">
+                                    <button type="submit" name="action" value="new" class="btn btn-info">Save New</button>
+                                    <button type="submit" name="action" value="update"  class="btn btn-warning">Update</button>
+                                    <button type="submit" name="action" value="delete"  class="btn btn-danger">Delete</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- END Portal --> 
+
+ 
+            </div>
+        </form>
+
+<nav>
+  <ul class="pager">
+    {% if template_details.id > 0 %}
+    <li class="previous"><a href="/template/{{template_details.id|add:'-1'}}"><span aria-hidden="true">&larr;</span> Prev template</a></li>
+    {% else %}
+    <li class="previous"><a href="/template/{{template_details.id}}"><span aria-hidden="true">&larr;</span> Prev template</a></li>
+    {% endif %}
+    <li class="next"><a href="/template/{{template_details.id|add:'1'}}">Next Template<span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+</nav>
+
+
+{% endblock %}

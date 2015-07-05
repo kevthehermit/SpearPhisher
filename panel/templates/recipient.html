@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Campaign ID: {% endblock %}
+
+
+{% block templates %}
+    {% for template in template_list %}
+    <option value="{{template.id}}">{{template.title}}</option>
+    {% endfor %}
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Recipient Information</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th class="col-md-1">Real Name</th>
+                <td class="col-md-4">{{ recipient.real_name }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">Email Address</th>
+                <td class="col-md-4">{{ recipient.email_address }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">UID</th>
+                <td class="col-md-4">{{ recipient.uid }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">Active Campaign</th>
+                <td class="col-md-4">{{ recipient.campaign.name }}</td>
+            </tr>            
+        </table>
+    </div>
+</div>
+
+<hr />
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Host Information</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th class="col-md-1">Operating System</th>
+                <td class="col-md-4">{{ recipient.os_system }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">IP Address</th>
+                <td class="col-md-4">{{ recipient.ip_address }}</td>
+            </tr>           
+        </table>
+    </div>
+</div>
+
+<hr />
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Email Client Information</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th class="col-md-1">Email Opened</th>
+                <td class="col-md-4">{{ recipient.email_open }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">Email Client</th>
+                <td class="col-md-4">{{ recipient.email_client }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr />
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Web Browser Information</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th class="col-md-1">Portal Open</th>
+                <td class="col-md-4">{{ recipient.portal_open }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">Web Browser</th>
+                <td class="col-md-4">{{ recipient.web_client }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">Adobe Reader</th>
+                <td class="col-md-4">{{ recipient.reader_version }}</td>
+            </tr>            
+            <tr>
+                <th class="col-md-1">Adobe Flash</th>
+                <td class="col-md-4">{{ recipient.flash_version }}</td>
+            </tr>              
+            <tr>
+                <th class="col-md-1">Java</th>
+                <td class="col-md-4">{{ recipient.java_version }}</td>
+            </tr>              
+            <tr>
+                <th class="col-md-1">SilverLight</th>
+                <td class="col-md-4">{{ recipient.silver_version }}</td>
+            </tr>             
+            <tr>
+                <th class="col-md-1">ShockWave</th>
+                <td class="col-md-4">{{ recipient.shockwave_version }}</td>
+            </tr>  
+            <tr>
+                <th class="col-md-1">Post Data</th>
+                <td class="col-md-4">{{ recipient.post_data }}</td>
+            </tr>  
+
+
+            
+        </table>
+    </div>
+</div> 
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Office Document Information</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th class="col-md-1">Document Open</th>
+                <td class="col-md-4">{{ recipient.document_open }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">Document Client</th>
+                <td class="col-md-4">{{ recipient.document_client }}</td>
+            </tr>           
+        </table>
+    </div>
+</div>
+
+<hr />
+
+
+
+
+
+
+
+          
+{% endblock %}
