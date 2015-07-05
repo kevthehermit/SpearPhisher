@@ -23,6 +23,7 @@ ToDo:
 * Edit Campaign
 * Pre Defined Templates.
 * Safely handle JavaScript in Templates to block them in template view mode. 
+* Complete the Form Handler.
 
 For best performance the Web server should **NOT** be run on the default single threaded SQlite DB and web server. In this installation example I will use Apache with MOD WSGI and MySQL.  
 
@@ -178,6 +179,8 @@ The portal URI is the domain / ip that the portal is hosted on. e.g. spearphishe
 The Redirect to is used to redirect to any other domain. 
 If plugin detection has been enabled there is a 3 second delay in order to complete the plugin detection. If you are redirecting from plugin detection it may be worth adding a 'Please Wait or eqivilent line as the portal page will be visible.'
 
+
+**ToDo**
 In the portal design elements you can create an HTML form to cpature Post Data. Just set the form action to ```action="/f"```.
 
 You must also include the following form field in order to correctly track. 
