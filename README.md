@@ -1,5 +1,7 @@
 # SpearPhisher
-A Web Application to Send and Track Spear Phishing Campaigns
+A Web Application to Send and Track Spear Phishing Campaigns.
+
+You can view screenshots and a quick demo video at http://spearphisher.co.uk
 
 SpearPhisher is made up of 3 components. 
 * Django Web Application for Creation and Management.
