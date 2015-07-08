@@ -39,6 +39,9 @@ During installation the following optional elements were selected for installati
 * LAMP Server
 * Mail server - Postfix set to Internet Site
 
+These can also be installed with:
+```sudo apt-get install apache2 mysql-server php5 postfix```
+
 ```
 $ sudo apt-get update
 $ sudo apt-get upgrade
@@ -79,6 +82,7 @@ Disable the default site and enable our portal
 $ sudo a2dissite 000-default.conf
 $ sudo a2ensite portal.conf
 $ sudo service apache2 restart
+$sudo a2enmod wsgi
 ```
 
 
@@ -106,7 +110,7 @@ Edit spearphisher/settings.py
 - Set Your TIME_ZONE
 - Set DEBUG = False
 - Set TEMPLATE_DEBUG = False
-- Set ALLOWED_HOSTS = [*] # https://docs.djangoproject.com/en/1.8/ref/settings/#allowed-hosts
+- Set ALLOWED_HOSTS = ['*'] # https://docs.djangoproject.com/en/1.8/ref/settings/#allowed-hosts
 
 ```
 $ python manage.py makemigrations
