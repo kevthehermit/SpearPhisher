@@ -97,7 +97,7 @@ Create a user and a database
 ```
 $ mysql -u root -p 
 enter password: <The one you set at install>
-mysql> create database spearphsiher;
+mysql> create database spearphisher;
 mysql> create user 'spearphisher'@'localhost' identified by 'spearphisher';
 mysql> grant all on spearphisher.* to 'spearphisher'@'localhost';
 mysql> FLUSH PRIVILEGES;
