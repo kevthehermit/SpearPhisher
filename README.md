@@ -54,10 +54,41 @@ $ sudo pip install --upgrade bottle django mysql-python ua-parser
 
 The following additions are optional but can be used to enhance the functionality or asthetics of the application
 
-* Admin Bootstrap - sudo pip install admin-bootstraped
+* Admin Bootstrap - sudo pip install django-admin-bootstrapped
 * SSLServer - sudo pip install django-sslserver
-* Fake Factory - sudo pip install 
-* 
+* Fake Factory - sudo pip install fake-factory
+
+Admin Bootstrapped simply changes the Admin Panel to bootstrap themes.
+
+To enable add to the list of insatlled apps in settings.py
+```
+INSTALLED_APPS = (...
+"admin-bootstrapped",
+...
+)
+```
+
+SSLServer allows you to access the Web Panel via SSL. It does **NOT** allow the portal to work over ssl.
+
+To enable add to the list of insatlled apps in settings.py
+```
+INSTALLED_APPS = (...
+"sslserver",
+...
+)
+```
+
+Then start the server with:
+
+```python manage.py runsslserver --addrport 0.0.0.0:8080```
+
+instead of 
+
+```$ python manage.py runserver 0.0.0.0:8080```
+
+This uses a default Django SLL Certificate and Key. Changing this is advised but it outside the scope of this install.
+
+Fake Factory is only used with the testdata script to generate random Campaign entries. This will also error if you do not have any templates and will be fixed in the next update.
 
 
 ## Configuration
@@ -81,8 +112,8 @@ Disable the default site and enable our portal
 ```
 $ sudo a2dissite 000-default.conf
 $ sudo a2ensite portal.conf
+$ sudo a2enmod wsgi
 $ sudo service apache2 restart
-$sudo a2enmod wsgi
 ```
 
 
