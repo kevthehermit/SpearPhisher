@@ -63,7 +63,7 @@ Admin Bootstrapped simply changes the Admin Panel to bootstrap themes.
 To enable add to the list of insatlled apps in settings.py
 ```
 INSTALLED_APPS = (...
-"admin-bootstrapped",
+"django_admin_bootstrapped",
 ...
 )
 ```
@@ -139,9 +139,6 @@ Edit spearphisher/settings.py
 
 - Set the DATABASES Settings to match your setup
 - Set Your TIME_ZONE
-- Set DEBUG = False
-- Set TEMPLATE_DEBUG = False
-- Set ALLOWED_HOSTS = ['*'] # https://docs.djangoproject.com/en/1.8/ref/settings/#allowed-hosts
 
 ```
 $ python manage.py makemigrations
