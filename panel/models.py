@@ -100,17 +100,17 @@ class Template(models.Model):
     display_name = models.CharField(max_length=200)
     email_address = models.CharField(max_length=200)
     subject_line = models.CharField(max_length=100)
-    email_design = models.CharField(max_length=8000, null=True, blank=True)
+    email_design = models.TextField(max_length=8000, null=True, blank=True)
     smtpServer = models.ForeignKey(SMTPServer)
     
     portal_uri = models.CharField(max_length=100)
     portal_plugins = models.IntegerField()
-    portal_design = models.CharField(max_length=8000, null=True, blank=True)
+    portal_design = models.TextField(max_length=8000, null=True, blank=True)
     portal_redirect = models.CharField(max_length=200, null=True, blank=True, default='None')
     
     document_enable = models.IntegerField()
     document_name = models.CharField(max_length=100, null=True, blank=True)
-    document_design = models.CharField(max_length=8000, null=True, blank=True)
+    document_design = models.TextField(max_length=8000, null=True, blank=True)
        
     def __str__(self):
         return self.title
